@@ -6,62 +6,76 @@ USERNAME="$FTP_USER"
 PASSWORD="$FTP_PASSWORD"
 
 # Base remote directory
-BASE_REMOTE="mime"
+BASE_REMOTE="/mime"
 
-# Directories to replicate and upload
-declare -a DIRECTORIES=("app/html" "app/src")
-declare -a DIST=("./dist/*")
+# Lokální složky
+declare -a HTML_DIRS=("app/html")
+declare -a SRC_DIRS=("app/src")
+declare -a DIST_FILES=("dist/script.js" "dist/style.css")
 
-# Install sshpass for non-interactive ssh login (if not already installed)
-if ! command -v sshpass &> /dev/null
-then
-    echo "sshpass could not be found, installing..."
-    sudo apt-get update && sudo apt-get install -y sshpass
-fi
-
-upload_dist() {
-  local dir=$1
-  local base=$(basename "$dir")
-
-  echo "mkdir $BASE_REMOTE"
-  echo "cd $BASE_REMOTE"
-  echo "put -r $dir"
+# Kontrola a vytvoření adresáře na vzdáleném serveru
+check_and_create_directory() {
+    local remote_path="$1"
+    echo "ls \"$remote_path\" > /dev/null 2>&1 || mkdir \"$remote_path\""
 }
 
-upload_directory() {
-    local dir=$1
-    local base=$(basename "$dir")
+# Funkce pro nahrání HTML složek
+upload_html() {
+    local dir="$1"
+    local remote_dir="$BASE_REMOTE/html"
 
-    echo "cd /" # Reset to root directory
-    echo "cd $BASE_REMOTE" # Go into mime folder
+    # Procházení všech souborů a složek
+    find "$dir" -type f | while IFS= read -r file; do
+        local relative_path="${file#$dir/}" # Relativní cesta vůči root složce
+        local remote_path="$remote_dir/$relative_path"
 
-    # Create and enter into the corresponding remote directory
-    echo "mkdir $base" # create directory in mime folder, named after the base directory
-    echo "cd $base" # enter into the directory
+        # Vytvoření adresářů na serveru
+        local remote_subdir=$(dirname "$remote_path")
+        check_and_create_directory "$remote_subdir"
 
-    # Upload all files from the directory to the remote server
-    find "$dir" -type f | while IFS= read -r file; do # Read all files in the directory
-        local subdir=$(dirname "$file") # Get the subdirectory of the file
-        local relative_subdir="${subdir##*/}" # Get the relative subdirectory
-        local filename=$(basename "$file") # Get the filename
-
-
-        if [ "$subdir" != "$dir" ]; then # If file is not in the base directory
-            echo "mkdir \"$relative_subdir\"" # Create the subdirectory in the remote server
-            echo "cd \"$relative_subdir\"" # Enter into the subdirectory
-            echo "put \"$file\" \"$filename\"" # Upload the file to the subdirectory
-            echo "cd .." # Reset to base directory for each file
-        fi
-
-        if [ "$subdir" === "$dir" ]; then 
-            echo "put \"$file\" \"$filename\"" # Upload the file to the base directory
-        fi
+        # Nahrání souboru
+        echo "put \"$file\" \"$remote_path\""
     done
 }
 
+# Funkce pro nahrání SRC složek
+upload_src() {
+    local dir="$1"
+    local remote_dir="$BASE_REMOTE/src"
+
+    # Procházení všech souborů a složek
+    find "$dir" -type f | while IFS= read -r file; do
+        local relative_path="${file#$dir/}" # Relativní cesta vůči root složce
+        local remote_path="$remote_dir/$relative_path"
+
+        # Vytvoření adresářů na serveru
+        local remote_subdir=$(dirname "$remote_path")
+        check_and_create_directory "$remote_subdir"
+
+        # Nahrání souboru
+        echo "put \"$file\" \"$remote_path\""
+    done
+}
+
+# Funkce pro nahrání jednotlivých dist souborů
+upload_dist() {
+    local file="$1"
+    local remote_path="$BASE_REMOTE/$(basename "$file")"
+
+    # Nahrání souboru
+    echo "put \"$file\" \"$remote_path\""
+}
+
 # Start SFTP session
-sshpass -p $PASSWORD sftp -oBatchMode=no -oStrictHostKeyChecking=no $USERNAME@$HOST <<EOF
-$(for dir in "${DIST[@]}"; do upload_dist "$dir"; done)
-$(for dir in "${DIRECTORIES[@]}"; do upload_directory "$dir"; done)
+sshpass -p "$PASSWORD" sftp -oBatchMode=no -oStrictHostKeyChecking=no "$USERNAME@$HOST" <<EOF
+# Nahrání HTML složek
+$(for dir in "${HTML_DIRS[@]}"; do upload_html "$dir"; done)
+
+# Nahrání SRC složek
+$(for dir in "${SRC_DIRS[@]}"; do upload_src "$dir"; done)
+
+# Nahrání dist souborů
+$(for file in "${DIST_FILES[@]}"; do upload_dist "$file"; done)
+
 bye
 EOF
