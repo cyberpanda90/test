@@ -6,76 +6,63 @@ USERNAME="$FTP_USER"
 PASSWORD="$FTP_PASSWORD"
 
 # Base remote directory
-BASE_REMOTE="mime"
+BASE_REMOTE="/mime"
 
 # Lokální složky
-declare -a HTML_DIRS=("app/html")
-declare -a SRC_DIRS=("app/src")
-declare -a DIST_FILES=("dist/script.js" "dist/style.css")
+HTML_DIR="app/html"
+SRC_DIR="app/src"
+DIST_FILES=("dist/script.js" "dist/style.css")
 
-# Kontrola a vytvoření adresáře na vzdáleném serveru
-check_and_create_directory() {
-    local remote_path="$1"
-    echo "ls \"$remote_path\" > /dev/null 2>&1 || mkdir \"$remote_path\""
+# Funkce pro vytvoření složky (rekurzivně)
+create_remote_dir() {
+    local path="$1"
+    IFS="/" read -ra parts <<< "$path"
+    local current_path=""
+    for part in "${parts[@]}"; do
+        current_path="$current_path/$part"
+        echo "mkdir \"$current_path\" > /dev/null 2>&1 || :"
+    done
 }
 
-# Funkce pro nahrání HTML složek
+# Funkce pro nahrávání HTML složek
 upload_html() {
-    local dir="$1"
-    local remote_dir="$BASE_REMOTE/html"
-
-    # Procházení všech souborů a složek
-    find "$dir" -type f | while IFS= read -r file; do
-        local relative_path="${file#$dir/}" # Relativní cesta vůči root složce
-        local remote_path="$remote_dir/$relative_path"
-
-        # Vytvoření adresářů na serveru
-        local remote_subdir=$(dirname "$remote_path")
-        check_and_create_directory "$remote_subdir"
-
-        # Nahrání souboru
-        echo "put \"$file\" \"$remote_path\""
+    find "$HTML_DIR" -type f | while IFS= read -r file; do
+        local relative_path="${file#$HTML_DIR/}"
+        local remote_path="$BASE_REMOTE/html/$relative_path"
+        local remote_dir=$(dirname "$remote_path")
+        create_remote_dir "$remote_dir"
+        echo "cd \"$remote_dir\""
+        echo "put \"$file\" \"$(basename "$file")\""
     done
 }
 
-# Funkce pro nahrání SRC složek
+# Funkce pro nahrávání SRC složek
 upload_src() {
-    local dir="$1"
-    local remote_dir="$BASE_REMOTE/src"
-
-    # Procházení všech souborů a složek
-    find "$dir" -type f | while IFS= read -r file; do
-        local relative_path="${file#$dir/}" # Relativní cesta vůči root složce
-        local remote_path="$remote_dir/$relative_path"
-
-        # Vytvoření adresářů na serveru
-        local remote_subdir=$(dirname "$remote_path")
-        check_and_create_directory "$remote_subdir"
-
-        # Nahrání souboru
-        echo "put \"$file\" \"$remote_path\""
+    find "$SRC_DIR" -type f | while IFS= read -r file; do
+        local relative_path="${file#$SRC_DIR/}"
+        local remote_path="$BASE_REMOTE/src/$relative_path"
+        local remote_dir=$(dirname "$remote_path")
+        create_remote_dir "$remote_dir"
+        echo "cd \"$remote_dir\""
+        echo "put \"$file\" \"$(basename "$file")\""
     done
 }
 
-# Funkce pro nahrání jednotlivých dist souborů
+# Funkce pro nahrávání dist souborů
 upload_dist() {
-    local file="$1"
-    local remote_path="$BASE_REMOTE/$(basename "$file")"
-
-    # Nahrání souboru
-    echo "put \"$file\" \"$remote_path\""
+    for file in "${DIST_FILES[@]}"; do
+        local remote_path="$BASE_REMOTE/$(basename "$file")"
+        echo "cd \"$BASE_REMOTE\""
+        echo "put \"$file\" \"$(basename "$file")\""
+    done
 }
 
-# Start SFTP session
+# Spuštění SFTP
 sshpass -p "$PASSWORD" sftp -oBatchMode=no -oStrictHostKeyChecking=no "$USERNAME@$HOST" <<EOF
-# Nahrání HTML složek
-$(for dir in "${HTML_DIRS[@]}"; do upload_html "$dir"; done)
-
-# Nahrání SRC složek
-$(for dir in "${SRC_DIRS[@]}"; do upload_src "$dir"; done)
-
-# Nahrání dist souborů
-$(for file in "${DIST_FILES[@]}"; do upload_dist "$file"; done)
-
+$(create_remote_dir "$BASE_REMOTE/html")
+$(upload_html)
+$(create_remote_dir "$BASE_REMOTE/src")
+$(upload_src)
+$(upload_dist)
 bye
 EOF
