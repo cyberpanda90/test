@@ -16,18 +16,20 @@ DIST_FILES=("dist/script.js" "dist/style.css")
 # Funkce pro vytvoření složky (rekurzivně)
 create_remote_dir() {
     local path="$1"
+    local dirs=""
     IFS="/" read -ra parts <<< "$path"
-    local current_path=""
     for part in "${parts[@]}"; do
-        current_path="$current_path/$part"
-        echo "mkdir \"$current_path\" > /dev/null 2>&1 || :"
+        dirs="$dirs/$part"
+        echo "mkdir \"$dirs\" || :"
     done
 }
 
-# Funkce pro kontrolu existence souboru na serveru
+# Funkce pro kontrolu existence souboru
 file_exists() {
     local remote_file="$1"
-    echo "ls \"$remote_file\" > /dev/null 2>&1"
+    echo "if [ -f \"$remote_file\" ]; then"
+    echo "  echo \"$remote_file exists\""
+    echo "else"
 }
 
 # Funkce pro nahrávání HTML složek
@@ -38,7 +40,7 @@ upload_html() {
         local remote_dir=$(dirname "$remote_path")
         create_remote_dir "$remote_dir"
         echo "# Checking and uploading: $file to $remote_path"
-        echo "if ! $(file_exists "$remote_path"); then"
+        file_exists "$remote_path"
         echo "cd \"$remote_dir\""
         echo "put \"$file\" \"$(basename "$file")\""
         echo "fi"
@@ -53,7 +55,7 @@ upload_src() {
         local remote_dir=$(dirname "$remote_path")
         create_remote_dir "$remote_dir"
         echo "# Checking and uploading: $file to $remote_path"
-        echo "if ! $(file_exists "$remote_path"); then"
+        file_exists "$remote_path"
         echo "cd \"$remote_dir\""
         echo "put \"$file\" \"$(basename "$file")\""
         echo "fi"
@@ -65,7 +67,7 @@ upload_dist() {
     for file in "${DIST_FILES[@]}"; do
         local remote_path="$BASE_REMOTE/$(basename "$file")"
         echo "# Checking and uploading: $file to $remote_path"
-        echo "if ! $(file_exists "$remote_path"); then"
+        file_exists "$remote_path"
         echo "cd \"$BASE_REMOTE\""
         echo "put \"$file\" \"$(basename "$file")\""
         echo "fi"
