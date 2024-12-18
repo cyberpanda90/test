@@ -26,7 +26,7 @@ create_remote_dirs() {
     IFS="/" read -ra parts <<< "$path"
     for part in "${parts[@]}"; do
         current_dir="$current_dir$part"
-        echo "if [ ! -d \"$current_dir\" ]; then mkdir \"$current_dir\"; fi"
+        echo "mkdir \"$current_dir\" || true"
         current_dir="$current_dir/"
     done
 }
@@ -39,8 +39,8 @@ upload_files() {
         local relative_path="${file#$local_dir/}"
         local remote_path=$(clean_path "$remote_base/$relative_path")
         local remote_dir=$(dirname "$remote_path")
-        echo "cd \"$remote_dir\""
-        echo "put \"$file\" \"$(basename "$file")\""
+        create_remote_dirs "$remote_dir"
+        echo "put \"$file\" \"$remote_path\""
     done
 }
 
