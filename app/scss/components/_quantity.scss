@@ -1,0 +1,25 @@
+.quantity {
+	border: $border;
+	border-radius: 0;
+	margin-right: $gap;
+
+	.increase,
+	.decrease {
+		height: $btn-height;
+		border-color: $border-color;
+		background-color: $c-gray-200;
+		border-radius: 0;
+
+		&:before {
+			font-weight: $fw-light;
+			font-size: $fs-base;
+			line-height: $btn-height;
+		}
+	}
+
+	input {
+		height: $btn-height;
+		font-weight: $fw-light;
+		font-size: $fs-base;
+	}
+}

@@ -1,0 +1,22 @@
+// Needs to be as .btn { &.btn { ... } } to rewrite native Shoptet button style
+.btn,
+a.btn {
+	&.btn {
+		font-weight: $fw-semibold;
+		font-size: $fs-base;
+		border-radius: 0;
+		padding: $btn-padding;
+
+		&-primary {
+			color: $c-btn-primary;
+			background-color: $c-primary;
+		}
+
+		&-secondary,
+		&-default {
+			border-color: $c-secondary;
+			background-color: $c-secondary;
+			color: $c-btn-secondary;
+		}
+	}
+}

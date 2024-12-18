@@ -1,0 +1,156 @@
+.carousel-wrapper {
+	position: relative;
+
+	&:before {
+		display: block;
+		content: '';
+		width: 100%;
+		height: 20%;
+		background: linear-gradient(
+			180deg,
+			rgba(0, 0, 0, 0.5) 0%,
+			rgba(0, 212, 255, 0) 100%
+		);
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1;
+	}
+
+	.banners-row {
+		.wide-carousel {
+			.carousel {
+				&-inner {
+					height: 80vh;
+					max-height: $carousel-max-height;
+					min-height: unset !important;
+
+					@include max-sm {
+						max-height: 100vh;
+						height: 100vh;
+					}
+
+					.item {
+						height: 100%;
+
+						a > img,
+						> img,
+						a > picture > img {
+							inset: 0;
+							padding: 0;
+							border: none;
+							margin: auto;
+							display: block;
+							width: 0;
+							height: 0;
+							min-width: 100%;
+							max-width: 100%;
+							min-height: 100%;
+							max-height: 100%;
+							-o-object-fit: cover;
+							object-fit: cover;
+							-o-object-position: top center;
+							object-position: top center;
+							position: absolute;
+						}
+
+						a {
+							display: flex;
+							flex-wrap: wrap;
+
+							.extended-banner {
+								&-texts {
+									display: flex;
+									align-items: center;
+									min-height: unset;
+									padding: 0;
+									position: absolute;
+									left: 0;
+									width: 100%;
+									bottom: 20%;
+									background-color: transparent;
+								}
+
+								&-title {
+									margin-bottom: 0;
+									font-size: $fs-h1;
+									font-weight: $fw-semibold;
+									line-height: $lh-h1;
+									letter-spacing: $gap * 3;
+									text-transform: uppercase;
+									color: $c-white;
+									overflow: hidden;
+									text-align: center;
+								}
+
+								&-text {
+									font-size: $fs-lg;
+									width: auto;
+									margin: 0;
+									color: $c-white;
+									text-align: center;
+									height: auto;
+									line-height: $fs-lg;
+									height: $fs-lg;
+									font-weight: $fw-bold;
+									position: relative;
+									z-index: 2;
+									overflow: visible;
+									margin-top: -($gap * 2);
+
+									@include min-md {
+										font-size: $fs-lg * 2;
+										line-height: $fs-lg * 2;
+										height: $fs-lg * 2;
+										margin-top: 0;
+									}
+
+									&:after {
+										content: '';
+										height: calc($fs-lg / 2);
+										width: 90%;
+										background-image: url(#{$urlImg}carousel-line.svg);
+										background-size: contain;
+										display: block;
+										position: relative;
+										z-index: -1;
+										top: -($gap * 2);
+										margin: auto;
+										text-align: center;
+										background-position: center;
+										background-repeat: no-repeat;
+
+										@include min-md {
+											top: -($gap * 5);
+											height: $gap * 10;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				&-indicators {
+					li {
+						width: $carousel-dot-size;
+						height: $carousel-dot-size;
+						border: $border-width $border-type $c-white;
+						margin: 0 $gap;
+
+						&.active {
+							position: relative;
+							border-radius: 50%;
+							background-color: transparent;
+							background-color: $c-white;
+
+							&::after {
+								display: none;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

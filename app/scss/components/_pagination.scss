@@ -1,0 +1,66 @@
+#content-wrapper {
+	.pagination-wrapper {
+		justify-content: flex-end;
+		margin-bottom: $gap * 10;
+		position: relative;
+
+		.pagination {
+			width: auto;
+			min-width: 0;
+			z-index: 2;
+
+			&-top {
+				display: none;
+			}
+
+			&-loader {
+				flex-grow: 1;
+
+				@include min-xl {
+					position: absolute;
+					width: 100%;
+				}
+
+				.btn {
+					background-color: transparent;
+					border-color: $c-primary;
+					color: $c-base;
+
+					&:hover {
+						color: $c-white;
+						background-color: $c-primary;
+					}
+
+					&:after {
+						display: none;
+					}
+				}
+			}
+
+			&-count {
+				display: none;
+			}
+
+			&-link,
+			> a {
+				border-radius: 0;
+				border: $border;
+				background-color: transparent;
+
+				&:hover {
+					background-color: $c-base;
+					color: $c-white;
+					text-decoration: none;
+				}
+			}
+
+			.current {
+				background: $c-base;
+				color: $c-white;
+				border-radius: 0;
+				position: relative;
+				top: -1px;
+			}
+		}
+	}
+}

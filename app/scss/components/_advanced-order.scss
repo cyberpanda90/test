@@ -1,0 +1,35 @@
+.advanced-order {
+	.products-block {
+		> .product {
+			.widget-parameter-wrapper {
+				position: absolute;
+			}
+
+			.p-in {
+				.p-in-in {
+					text-align: left;
+
+					.name {
+						font-weight: $fw-light;
+					}
+				}
+
+				.p-bottom {
+					.prices {
+						flex-direction: row;
+						justify-content: flex-start;
+
+						.price {
+							flex-basis: auto;
+						}
+					}
+
+					.availability,
+					.ratings-wrapper {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+}

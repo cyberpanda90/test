@@ -1,0 +1,52 @@
+/**
+ * Mime Copyright v1.0.0
+ * Vygeneruje a zobrazí copyright značky mime digital. Copyright zahrnuje 
+ * logo Shoptet a odkaz na web mime digital s logem společnosti.
+ * 
+ * (c) mime digital s.r.o. 2023
+ * https://mimedigital.cz
+ * medard.huttenbach@mimedigital.cz
+ **/
+
+.footer-bottom {
+	#signature {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		flex-wrap: nowrap;
+
+		.title {
+			display: flex;
+			align-items: center;
+			color: inherit;
+
+			img {
+				margin-left: 0;
+				margin-right: 10px;
+				height: 16px;
+			}
+		}
+
+		.pipe {
+			color: inherit;
+			margin: 0 10px;
+		}
+
+		a {
+			color: inherit;
+			display: flex;
+			align-items: center;
+
+			img {
+				margin-left: 10px;
+				margin-right: 0;
+				height: 25px;
+				margin-top: -2px;
+			}
+		}
+
+		img {
+			width: auto;
+		}
+	}
+}

@@ -1,0 +1,44 @@
+#content {
+	.cart-inner .contact-box [class^='icon-'],
+	.extras-wrapper [class^='icon-'],
+	.cart-inner .contact-box [class*=' icon-'],
+	.extras-wrapper [class*=' icon-'] {
+		color: $c-primary;
+	}
+
+	ol {
+		&.cart-header {
+			li {
+				a {
+					font-size: $fs-h4;
+
+					&:before {
+						height: $grid-gap-xl;
+						width: $grid-gap-xl;
+						border-radius: 0;
+						line-height: $grid-gap-xl;
+						background-color: $c-gray-300;
+						border-color: $c-gray-300;
+					}
+
+					&:hover {
+						text-decoration: none;
+					}
+				}
+
+				strong {
+					font-size: $fs-h4;
+
+					&:before {
+						height: $grid-gap-xl;
+						width: $grid-gap-xl;
+						border-radius: 0;
+						line-height: $grid-gap-xl;
+						background-color: $c-gray-300;
+						border-color: $c-gray-300;
+					}
+				}
+			}
+		}
+	}
+}

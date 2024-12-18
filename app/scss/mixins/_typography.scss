@@ -1,0 +1,24 @@
+@mixin h1 {
+	font-size: $fs-h1;
+	margin: $x1 0 calc($x1 * 2) 0;
+}
+
+@mixin h2 {
+	font-size: $fs-h2;
+	margin: $x1 0 calc($x1 * 2) 0;
+}
+
+@mixin h3 {
+	font-size: $fs-h3;
+	margin: $x1 0;
+}
+
+@mixin h4 {
+	font-size: $fs-h4;
+	margin: $x1 0;
+}
+
+@mixin p {
+	font-size: $fs-p;
+	margin-bottom: $x1;
+}

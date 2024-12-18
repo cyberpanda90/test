@@ -1,0 +1,96 @@
+.flags {
+	&.flags-default {
+		padding: $gap * 2;
+		flex-direction: column;
+		display: flex;
+		width: auto;
+		align-items: flex-start;
+	}
+}
+
+.flag {
+	&.flag {
+		background-color: $c-white;
+		color: $c-green-400;
+		font-size: 70%;
+		text-transform: lowercase;
+		border-radius: 0;
+		font-weight: $fw-semibold;
+		min-width: 0;
+		line-height: $fs-base;
+		padding: $gap;
+
+		@include min-xs {
+			font-size: $fs-p;
+		}
+
+		&-new {
+			color: $c-green-400;
+		}
+
+		&-action {
+			color: $c-red-400;
+		}
+
+		&-sale-price {
+			color: $c-primary;
+		}
+
+		.icon-van {
+			display: none;
+		}
+	}
+}
+
+// Flag on product detail
+.p-detail-inner {
+	.flags {
+		&-extra {
+			position: absolute;
+			top: $gap;
+			left: $gap * 2;
+			bottom: auto;
+
+			.flag {
+				width: auto;
+				height: auto;
+				border-radius: 0;
+				font-size: $fs-p;
+
+				&-discount {
+					background-color: $c-white;
+
+					.price {
+						&-standard {
+							display: none;
+						}
+
+						&-save {
+							color: $c-primary;
+							font-size: $fs-p;
+						}
+					}
+				}
+			}
+		}
+
+		&-default {
+			width: auto;
+			right: $gap;
+		}
+
+		.flag {
+			font-size: $fs-p;
+
+			&-action {
+				display: none;
+			}
+
+			&-discount {
+				position: absolute;
+				top: $gap;
+				left: $gap * 2;
+			}
+		}
+	}
+}

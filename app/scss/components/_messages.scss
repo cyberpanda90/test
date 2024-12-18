@@ -1,0 +1,13 @@
+.messages {
+	top: $header-height !important;
+	opacity: 1;
+	z-index: 99999;
+
+	@include min-md {
+		top: $header-height * 2 !important;
+	}
+
+	.msg {
+		opacity: 1;
+	}
+}

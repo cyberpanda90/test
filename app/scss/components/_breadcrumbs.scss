@@ -1,0 +1,38 @@
+.breadcrumbs {
+	padding: calc($gap * 2) 0 calc($gap * 2);
+	text-transform: none;
+	font-size: $fs-p;
+	font-weight: $fw-light;
+
+	@include min-lg {
+		margin-top: $gap * 6;
+	}
+
+	> span {
+		display: none;
+
+		// Show only the current parent category
+		&:nth-last-child(2):not(:first-child) {
+			display: inline-block;
+
+			&:before {
+				content: '<';
+				margin-right: $gap;
+				color: $c-gray-500;
+			}
+
+			.navigation-bullet {
+				display: none;
+			}
+		}
+	}
+
+	a {
+		color: $c-base;
+
+		&:hover,
+		&:focus {
+			color: $c-base;
+		}
+	}
+}

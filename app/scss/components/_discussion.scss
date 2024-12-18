@@ -1,0 +1,40 @@
+// Rewrite the Shoptet less code
+.content-inner .votes-wrap.discussion .add-comment,
+.p-detail .votes-wrap.discussion .add-comment {
+	background-color: transparent;
+	color: $c-primary;
+}
+
+.discussion-wrapper {
+	margin-bottom: $gap * 10;
+}
+
+.discussion-form,
+.vote-form {
+	.form-group {
+		&.js-validated-element-wrapper {
+			position: relative;
+
+			&:after {
+				content: '*';
+				display: block;
+				position: absolute;
+				top: 0;
+				right: -$gap * 2;
+				color: $c-red-400;
+			}
+
+			&.col-sm-6 {
+				&:after {
+					right: $gap;
+				}
+			}
+
+			&.consents-first {
+				&:after {
+					display: none;
+				}
+			}
+		}
+	}
+}

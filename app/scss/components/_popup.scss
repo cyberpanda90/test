@@ -1,0 +1,46 @@
+#colorbox,
+#cboxOverlay {
+	z-index: 9999;
+}
+
+#cboxContent {
+	border-radius: 0;
+
+	#cboxLoadedContent {
+		border-radius: 0;
+	}
+
+	// Přidáno do košíku
+	.advanced-order {
+		.h1 {
+			font-size: $fs-h3;
+			letter-spacing: 0;
+		}
+
+		.ao-product {
+			.ao-image {
+				width: auto;
+				min-width: 100px;
+				flex-basis: 0;
+				margin-right: $gap * 2;
+			}
+
+			.ao-name {
+				.h3 {
+					font-size: $fs-h4;
+					font-weight: $fw-normal;
+					margin-bottom: 0;
+
+					span {
+						font-weight: $fw-light;
+						font-size: $fs-base;
+					}
+				}
+
+				.ao-availability {
+					font-weight: $fw-light;
+				}
+			}
+		}
+	}
+}

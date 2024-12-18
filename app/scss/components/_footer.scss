@@ -1,0 +1,221 @@
+.footer-newsletter-full-width {
+	display: none;
+}
+
+footer {
+	&#footer {
+		.custom-footer {
+			display: flex;
+			flex-direction: column;
+			padding-bottom: 0;
+			font-size: $fs-base;
+
+			@include min-md {
+				flex-direction: row;
+				padding-bottom: $gap * 5;
+			}
+
+			&__contact {
+				order: 1;
+				padding-top: $gap * 5;
+
+				@include min-md {
+					width: calc(100% / 4);
+					flex-basis: calc(100% / 4);
+				}
+
+				h4 {
+					display: none;
+				}
+
+				ul {
+					display: flex;
+					flex-direction: row;
+					flex-wrap: wrap;
+
+					&:before {
+						content: '';
+						display: block;
+						background-image: $img-logo-footer;
+						width: 100%;
+						height: $gap * 5;
+						background-repeat: no-repeat;
+						background-size: auto;
+					}
+
+					li {
+						display: none;
+
+						&.social-icon-list {
+							padding-right: $gap * 2;
+							padding-bottom: $gap * 5;
+							padding-top: $gap * 3;
+							display: block;
+
+							a {
+								filter: invert(1);
+								height: $icon-md;
+								width: $icon-md;
+
+								&:before {
+									line-height: $icon-md;
+									font-size: $fs-p;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			&__banner8 {
+				order: 2;
+
+				@include min-md {
+					width: calc(100% / 3 * 2);
+					flex-basis: calc(100% / 3 * 2);
+				}
+
+				.accordion {
+					width: 100vw;
+					margin-left: -($gap * 2);
+					margin-right: -($gap * 2);
+
+					@include min-md {
+						width: auto;
+						display: flex;
+					}
+
+					&-item {
+						position: relative;
+						border-top: $border;
+						border-bottom: $border;
+						margin-top: -1px; // This is to remove the double border between items
+
+						@include min-md {
+							border-top: 0;
+							border-bottom: 0;
+							margin-top: 0;
+							width: 50%;
+							flex-basis: 50%;
+						}
+
+						&:after {
+							content: '';
+							background-image: $icon-carret;
+							background-repeat: no-repeat;
+							height: $icon-xs;
+							width: $icon-xs;
+							display: block;
+							position: absolute;
+							right: $gap * 3;
+							top: $icon-xs;
+
+							@include min-md {
+								display: none;
+							}
+						}
+
+						&.active {
+							&:after {
+								transform: rotate(180deg);
+							}
+						}
+					}
+
+					&-trigger {
+						font-size: $fs-h3;
+						font-weight: $fw-semibold;
+						color: $c-base;
+						padding: $gap * 3;
+
+						@include min-md {
+							padding-top: 0;
+						}
+					}
+
+					&-content {
+						font-weight: $fw-light;
+						color: $c-gray-500;
+						padding: 0 ($gap * 3);
+						max-height: 0;
+						overflow: hidden;
+						transition: max-height $trans-time $trans-style;
+
+						@include min-md {
+							max-height: none;
+						}
+
+						li {
+							a {
+								padding: $gap 0;
+							}
+
+							span {
+								position: relative;
+								display: block;
+
+								&:before {
+									content: '';
+									display: block;
+									width: $gap * 4;
+									height: $gap * 4;
+									background-repeat: no-repeat;
+									background-size: auto;
+									position: absolute;
+									left: 0;
+									top: 50%;
+									transform: translateY(-50%);
+									margin-top: $gap;
+								}
+
+								&:after {
+									color: $c-gray-500;
+									display: block;
+									padding-left: $gap * 6;
+									margin-top: 0;
+								}
+
+								a {
+									color: $c-base;
+									font-weight: $fw-semibold;
+									padding-left: $gap * 6;
+								}
+
+								&.tel {
+									margin-bottom: $gap * 4;
+
+									&:before {
+										background-image: $icon-phone;
+									}
+
+									&:after {
+										content: '';
+									}
+								}
+
+								&.mail {
+									&:before {
+										background-image: $icon-mail;
+									}
+
+									&:after {
+										content: '';
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.footer-bottom {
+			a,
+			span,
+			strong {
+				color: $c-base;
+				font-weight: $fw-light;
+			}
+		}
+	}
+}

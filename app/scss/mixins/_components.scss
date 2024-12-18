@@ -1,0 +1,20 @@
+@mixin galleryPlus {
+	content: '+';
+	color: $c-white;
+	font-size: $fs-lg;
+	text-align: center;
+	display: block;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: $fs-lg;
+	margin: auto;
+	line-height: $fs-lg;
+	font-weight: $fw-bold;
+	transform: none;
+	background: transparent;
+	border-radius: 0;
+	width: auto;
+}

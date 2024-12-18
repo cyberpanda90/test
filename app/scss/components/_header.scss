@@ -1,0 +1,679 @@
+#header {
+	background-color: $c-white;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 9999; // Needed because of the native Shoptet overlay when search popup is opened
+
+	border-bottom: $border;
+	opacity: 0;
+	transition: opacity 0.05s $trans-style;
+
+	#navigation {
+		@include min-md {
+			height: $header-height;
+		}
+	}
+
+	.header-top {
+		height: $header-height;
+		border-bottom: $border;
+
+		&:before {
+			content: '';
+			height: $header-height;
+			background: $c-white;
+			top: 0;
+			left: 100%;
+			position: absolute;
+			display: block;
+			width: 100%;
+			transition: left $trans-time $trans-style;
+		}
+
+		.navigation-wrapper {
+			display: flex;
+
+			// Logo
+			.site-name {
+				order: 1;
+				text-align: left;
+				display: flex;
+				align-items: center;
+				flex-grow: 1;
+				padding: 0;
+
+				a {
+					z-index: 20;
+					position: relative;
+				}
+			}
+
+			// Buttons on the right side
+			.navigation-buttons {
+				order: 2;
+
+				a {
+					position: relative;
+					z-index: 20;
+
+					i {
+						&:before {
+							background-size: contain;
+							height: $gap * 4;
+							width: $gap * 4;
+							display: block;
+							color: $c-base;
+						}
+
+						&:after {
+							display: none;
+						}
+					}
+
+					&[data-target='search'] {
+						background-color: transparent;
+
+						.icon-search {
+							&:before {
+								content: '';
+								background-image: $icon-search;
+								background-repeat: no-repeat;
+							}
+						}
+					}
+
+					&[data-target='login'],
+					&.top-nav-button-account {
+						background-color: transparent;
+
+						.icon-login {
+							&:before {
+								content: '';
+								background-image: $icon-user;
+								background-repeat: no-repeat;
+							}
+						}
+					}
+
+					&.favourite {
+						.favourite_icon {
+							&:before {
+								content: '';
+								background-image: $icon-heart;
+								background-repeat: no-repeat;
+							}
+						}
+					}
+
+					&[data-target='cart'] {
+						padding-left: $gap;
+
+						.icon-cart {
+							&:before {
+								content: '';
+								background-image: $icon-cart;
+								background-repeat: no-repeat;
+								line-height: $fs-p;
+
+								// Cart icon is "span" element, not "i"
+								background-size: contain;
+								height: $gap * 4;
+								width: $gap * 4;
+								display: block;
+							}
+
+							&:after {
+								display: none;
+							}
+						}
+					}
+
+					&[data-target='navigation'] {
+						background-color: transparent;
+						color: $c-base;
+						text-decoration: none;
+						min-width: 50px;
+
+						&:hover {
+							text-decoration: none;
+						}
+					}
+				}
+			}
+
+			// Language picker
+			.navigation-tools {
+				order: 3;
+				width: auto;
+				position: relative;
+				z-index: 9999;
+
+				.dropdown-menu {
+					left: auto;
+					right: 0;
+					border-radius: 0;
+				}
+
+				.languagesMenu {
+					border-bottom: 1px solid $c-border-color;
+					margin-top: -1px;
+				}
+			}
+
+			// Popups
+			.user-action {
+				// Search popup
+				.user-action-search {
+					bottom: auto;
+					overflow: visible;
+
+					@include min-lg {
+						padding: ($gap * 6) ($gap * 13);
+						bottom: 0;
+						height: $search-widget-height;
+					}
+
+					&:before {
+						content: '';
+						width: 100vw;
+						height: 0;
+						left: 50%;
+						transform: translateX(-50%);
+						background-color: $c-white;
+						position: absolute;
+						top: 0;
+						z-index: 1;
+
+						@include min-lg {
+							height: $search-widget-height;
+						}
+					}
+
+					.search-form {
+						position: relative;
+						z-index: 2;
+
+						.search-form-input-group {
+							.search-input {
+								border-color: $c-border-color;
+								height: $input-height;
+								padding: $btn-padding;
+								background-image: $icon-search-black;
+								background-repeat: no-repeat;
+								background-position: ($gap * 3) center;
+								padding-left: $gap * 10;
+								color: $c-base;
+
+								&::placeholder {
+									color: $c-base;
+								}
+							}
+
+							.search-button {
+								height: $input-height;
+								padding: $btn-padding;
+							}
+						}
+					}
+
+					.search-widget-close {
+						bottom: 0;
+						margin: auto;
+					}
+				}
+
+				// Login popup
+				.user-action-login {
+					margin-right: 0;
+					width: 100%;
+					border-radius: 0;
+					max-width: $breakpoint-xl;
+					right: 0;
+
+					&:before {
+						content: '';
+						width: 100vw;
+						left: 50%;
+						transform: translateX(-50%);
+						background-color: $c-white;
+						position: absolute;
+						top: 0;
+						z-index: -1;
+						height: $popup-login-height;
+					}
+
+					.popup-widget-inner {
+						border-radius: 0;
+						box-shadow: none;
+						margin-top: $border-width;
+						height: auto;
+
+						@include min-lg {
+							height: $popup-login-height - $border-width;
+						}
+
+						h2 {
+							font-weight: $fw-semibold;
+						}
+
+						#customerLogin {
+							form {
+								display: flex;
+								flex-wrap: wrap;
+
+								> div {
+									width: 100%;
+
+									@include min-md {
+										width: 50%;
+									}
+
+									@include min-lg {
+										width: calc(100% / 3);
+										margin-bottom: 0;
+									}
+
+									&:last-of-type {
+										@include min-md {
+											width: 100%;
+										}
+
+										@include min-lg {
+											width: calc(100% / 3);
+										}
+									}
+
+									.input-wrapper {
+										&.password {
+											@include min-md {
+												margin-left: $gap * 2;
+											}
+										}
+
+										.form-control {
+											height: $input-height;
+										}
+									}
+
+									.login-wrapper {
+										@include min-lg {
+											padding-left: $gap * 3;
+											padding-top: 0;
+											padding-bottom: 0;
+										}
+
+										button {
+											@include min-lg {
+												width: 100%;
+											}
+										}
+
+										.password-helper {
+											@include min-lg {
+												width: 100%;
+												display: flex;
+												align-items: center;
+												justify-content: flex-end;
+												margin-top: $gap * 2;
+												text-align: right;
+											}
+
+											a {
+												+ a {
+													@include min-lg {
+														padding-top: 0;
+													}
+
+													&:before {
+														@include min-lg {
+															content: '/';
+															display: inline-block;
+															color: $c-gray-400;
+															margin: 0 ($gap * 3);
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				// Cart popup
+				.user-action-cart {
+					border-radius: 0;
+
+					.cart-widget-inner {
+						border-radius: 0;
+					}
+				}
+			}
+		}
+	}
+
+	// Main navigation
+	.header-bottom {
+		@include min-lg {
+			height: $header-height;
+		}
+
+		.navigation-wrapper {
+			nav {
+				background: $c-white;
+				margin: auto;
+
+				@include min-md {
+					background: transparent;
+				}
+
+				@include min-lg {
+					width: $container-lg;
+				}
+
+				@include min-xl {
+					width: $container-xl;
+				}
+
+				.navigation-in {
+					background-color: transparent;
+
+					ul {
+						// The always visible part
+						&.menu-level-1 {
+							// Hack the position
+							@include min-md {
+								position: relative;
+								justify-content: flex-start;
+							}
+
+							@include min-lg {
+								left: 0;
+							}
+
+							// Use > to apply styles only for the first level
+							> li {
+								cursor: pointer;
+								border: 0;
+
+								&.ext {
+									margin: 0; // This fixes moving menu links when hovered
+
+									.submenu-arrow {
+										display: inline-block;
+										position: relative;
+										opacity: 0.7;
+									}
+								}
+
+								&.exp {
+									> a {
+										background-color: transparent;
+
+										&:after {
+											@include min-lg {
+												content: '';
+												height: $gap;
+												width: 100%;
+												position: absolute;
+												display: block;
+												background-color: $c-primary;
+												z-index: 9999;
+												left: 0;
+												bottom: -($gap * 0.5);
+											}
+										}
+									}
+								}
+
+								// Use > to apply styles only for the first level
+								> a {
+									cursor: pointer;
+									color: $c-base;
+									text-transform: none;
+									font-size: $fs-base;
+									display: flex;
+									align-items: center;
+									height: $header-height;
+									position: relative;
+
+									@include min-lg {
+										font-size: $fs-h3;
+									}
+
+									&:hover,
+									&:focus {
+										background-color: transparent;
+
+										&:after {
+											display: block;
+										}
+									}
+
+									&:after {
+										@include min-lg {
+											content: '';
+											height: $gap;
+											width: 100%;
+											position: absolute;
+											display: none;
+											background-color: $c-primary;
+											z-index: 9999;
+											left: 0;
+											bottom: -($gap * 0.5);
+										}
+									}
+
+									b {
+										font-weight: $fw-semibold;
+									}
+								}
+							}
+						}
+
+						// Submenu
+						&.menu-level-2 {
+							width: 100%;
+							max-width: 100%;
+							margin: auto;
+							right: 0;
+							padding: ($gap * 10) ($gap * 3);
+							justify-content: flex-start;
+
+							@include min-lg {
+								transform: translateX(-50%);
+								left: 50%;
+							}
+
+							@include min-xxl {
+								width: $breakpoint-xl;
+							}
+
+							&:before {
+								content: '';
+								height: calc(100% + $gap);
+								width: 100vw;
+								background-color: $c-white;
+								position: absolute;
+								top: -1px;
+								left: 0;
+								z-index: -1;
+								border-top: $border;
+
+								@include min-lg {
+									transform: translateX(-50%);
+									left: 50%;
+								}
+							}
+
+							li {
+								padding: 0;
+
+								a {
+									color: $c-base;
+									font-size: $fs-h3;
+									font-weight: $fw-semibold;
+
+									@include max-lg {
+										padding-left: $gap * 3;
+									}
+
+									&:hover {
+										text-decoration: underline;
+									}
+
+									&.menu-image {
+										display: none;
+									}
+								}
+							}
+
+							// Style the second level only
+							> li {
+								> div {
+									padding-left: 0;
+
+									a {
+										margin-bottom: $gap * 3;
+									}
+								}
+							}
+
+							.menu-level-3 {
+								font-size: $fs-base;
+								font-weight: $fw-light;
+								padding-bottom: $gap;
+
+								li {
+									a {
+										font-size: $fs-base;
+										font-weight: $fw-light;
+										display: block;
+										margin-bottom: 0;
+										padding-bottom: $gap * 3;
+										line-height: $lh-h4;
+									}
+								}
+
+								.more-items-trigger {
+									display: none;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// Style the mobile opened menu
+.navigation-window-visible {
+	#header {
+		.header-bottom {
+			.navigation-wrapper {
+				nav {
+					.navigation-in {
+						.menu-level-1 {
+							// Styles for all levels
+							li {
+								border-radius: 0;
+								padding-left: 0;
+								padding-right: 0;
+								border: 0;
+								margin: 0;
+
+								&.exp {
+									background-color: transparent;
+									border-bottom: $border;
+
+									// Opened submenu
+									> a {
+										border-bottom: 0;
+									}
+								}
+							}
+
+							// Styles for the first level only
+							> li {
+								> a {
+									border: 0;
+									border-bottom: $border;
+									margin: 0 0 (-$border-width); // The -$border-width on the bottom is needed because of the border
+
+									.submenu-arrow {
+										position: absolute;
+									}
+								}
+							}
+
+							// Styles for the second level only
+							.menu-level-2 {
+								padding: 0 0 0 $gap;
+
+								> li {
+									> div {
+										a {
+											padding: ($gap * 2) ($gap * 3);
+											font-size: $fs-base;
+											margin-bottom: 0;
+											font-weight: $fw-light;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// Show different icon when mobile menu is opened
+body.navigation-window-visible .navigation-buttons a[data-target='navigation']:before {
+	content: '\e912';
+}
+
+// CLOSE button for user actions
+body.search-window-visible .icon-search:before,
+body.login-window-visible .icon-login:before,
+body.cart-window-visible .icon-cart:before {
+	background-image: $icon-cross !important;
+	filter: invert(0) !important;
+}
+
+// Add padding for all pages except for HP
+body:not(.in-index) {
+	.overall-wrapper {
+		padding-top: $header-height;
+
+		@include min-md {
+			padding-top: $header-height * 2;
+		}
+	}
+
+	&.admin-logged {
+		.overall-wrapper {
+			padding-top: $header-height + $adminbar-height;
+
+			@include min-md {
+				padding-top: calc($header-height * 2) + $adminbar-height;
+			}
+		}
+	}
+}
+
+// DEBUG: To debug submenu uncomment this:
+/*
+#navigation {
+    overflow: visible;
+    
+    .menu-item-4074 .menu-level-2 {
+        display: flex !important;
+    }
+}
+*/

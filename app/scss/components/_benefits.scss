@@ -1,0 +1,109 @@
+.benefit-banners-full-width {
+	.container-full-width {
+		padding: 0;
+		margin-left: -($gap * 3);
+		margin-right: -($gap * 3);
+		width: 100vw;
+		max-width: 100vw;
+
+		@include min-md {
+			width: calc(100vw + #{$gap * 6});
+		}
+
+		@include min-lg {
+			width: 100vw;
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		.benefitBanner {
+			display: flex;
+			flex-wrap: wrap;
+			margin-top: 0;
+			border-top: $border;
+			position: relative;
+			justify-content: space-between;
+
+			@include min-md {
+				border-top: 0;
+			}
+
+			@include min-xl {
+				max-width: $container-xl;
+				padding-top: $gap * 5;
+				margin-top: $gap * 2;
+				margin-bottom: $gap * 5;
+			}
+
+			// Simulate border-top
+			&:before {
+				@include min-xl {
+					content: '';
+					width: 100vw;
+					left: 50%;
+					transform: translateX(-50%);
+					height: $border-width;
+					background: $c-border-color;
+					display: block;
+					position: absolute;
+					top: 0;
+				}
+			}
+
+			&__item {
+				width: 50%;
+				flex: 0 0 50%;
+
+				@include min-sm {
+					width: 25%;
+					flex: 0 0 25%;
+				}
+
+				@include min-lg {
+					width: 50%;
+					flex: 0 0 50%;
+					display: flex;
+					flex-direction: row;
+					align-items: center;
+					gap: $gap * 3;
+					justify-content: flex-start;
+					padding: 0 calc($gap * 3);
+				}
+
+				@include min-xl {
+					width: auto;
+					flex: 0 0 auto;
+					margin-top: $gap * 2;
+				}
+			}
+
+			&__data {
+				color: $c-base;
+				font-size: $fs-base;
+				line-height: $lh-base;
+				font-weight: $fw-semibold;
+			}
+
+			&__picture {
+				margin-bottom: 0;
+
+				@include min-lg {
+					margin: 0;
+					flex: 0 0 auto;
+				}
+
+				img {
+					@include min-lg {
+						width: $icon-md;
+					}
+				}
+			}
+
+			&__content {
+				@include min-lg {
+					padding-left: 0;
+				}
+			}
+		}
+	}
+}

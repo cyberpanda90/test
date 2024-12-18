@@ -1,0 +1,42 @@
+body {
+	&.admin-logged {
+		.admin-bar {
+			height: $adminbar-height;
+			z-index: 99999;
+			position: fixed;
+			top: 0;
+
+			ul {
+				li {
+					a {
+						font-size: $fs-base;
+						padding: 7px 0;
+					}
+
+					span {
+						font-size: $fs-base;
+						padding: 7px 0;
+					}
+
+					ul {
+						top: $adminbar-height;
+
+						li {
+							a {
+								padding: 10px;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		#header {
+			top: $adminbar-height;
+		}
+
+		.msg-wrapper {
+			top: $header-height + $adminbar-height;
+		}
+	}
+}

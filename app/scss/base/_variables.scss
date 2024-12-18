@@ -1,0 +1,177 @@
+@use 'sass:math';
+
+// fonts
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;700&display=swap');
+
+// paths
+$urlImg: '/user/documents/mime/src/img/';
+$urlIcon: '/user/documents/mime/src/icon/';
+
+// images
+$img-welcome: url(#{$urlImg}welcome.webp);
+$img-mime-logo: url(#{$urlImg}mime-logo.svg);
+$img-logo-footer: url(#{$urlImg}footer-logo.svg);
+$img-404: url(#{$urlImg}404.svg);
+
+// icons
+$icon-favourite: url(#{$urlIcon}icon-fav-false.png);
+$icon-favourite-true: url(#{$urlIcon}icon-fav-true.png);
+$icon-favourite-hover: url(#{$urlIcon}icon-fav-hover.png);
+$icon-phone: url(#{$urlIcon}ico-phone.svg);
+$icon-mail: url(#{$urlIcon}ico-mail.svg);
+$icon-carret: url(#{$urlIcon}ico-carret.svg);
+$icon-search: url(#{$urlIcon}ico-search.svg);
+$icon-search-black: url(#{$urlIcon}ico-search-black.svg);
+$icon-user: url(#{$urlIcon}ico-user.svg);
+$icon-heart: url(#{$urlIcon}ico-heart.svg);
+$icon-cart: url(#{$urlIcon}ico-cart.svg);
+$icon-cross: url(#{$urlIcon}ico-cross.svg);
+
+$ff-base: 'Karla', sans-serif;
+$fs-base: 16px; // base for 1rem
+$lh-base: 22px;
+
+// font-size
+$fs-lg: 52px;
+$fs-h1: 32px;
+$fs-h2: 24px;
+$fs-h3: 20px;
+$fs-h4: 18px;
+$fs-p: 14px;
+
+// font-weight
+$fw-light: 300;
+$fw-normal: 400;
+$fw-semibold: 500;
+$fw-bold: 700;
+
+// line-height
+$lh-h1: 47px;
+$lh-h2: 42px;
+$lh-h3: 26px;
+$lh-h4: 20px;
+$lh-p: 18px;
+
+// colors
+$c-black: #000000;
+$c-white: #ffffff;
+
+$c-gray-100: #e3e3e3;
+$c-gray-200: #f6f8f7;
+$c-gray-300: #f5f5f5;
+$c-gray-400: #c8c8c8;
+$c-gray-500: #525252;
+$c-gray-600: #787878;
+
+$c-green-400: #66bb33;
+
+$c-orange-400: #e8522a;
+$c-orange-500: #d04925;
+
+$c-red-300: #bb3713;
+$c-red-400: #b40000;
+
+$c-yellow-400: #ffc42d;
+
+$c-base: $c-black;
+$c-primary: $c-orange-400;
+$c-primary-hover: $c-orange-500;
+$c-secondary: $c-base;
+$c-border-color: $c-gray-400;
+
+$c-btn-primary: $c-white;
+$c-btn-secondary: $c-white;
+
+// breakpoints
+$breakpoint-xs: 425px; // mobile devices
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px; // desktop
+$breakpoint-xl: 1330px;
+$breakpoint-xxl: 1400px;
+
+// original breakpoints to rewrite shoptet styles
+$breakpoint-xl-orig: 1200px;
+
+// icons
+$icon-xs: 16px;
+$icon-sm: 19px;
+$icon-md: 30px;
+$icon-lg: 67px;
+$icon-xxl: 135px;
+
+// grid
+$container-xs: $breakpoint-xs;
+$container-sm: $breakpoint-sm;
+$container-md: $breakpoint-md;
+$container-lg: $breakpoint-lg;
+$container-xl: $breakpoint-xl;
+$container-xxl: $breakpoint-xxl;
+
+// border
+$border-color: $c-border-color;
+$border-type: solid;
+$border-width: 1px;
+$border-radius: 5px;
+$border: $border-width $border-type $border-color;
+
+// spacing
+$gap: 5px;
+$x1: 1rem;
+
+$grid-gap-xs: 5px;
+$grid-gap-sm: 10px;
+$grid-gap-md: 15px;
+$grid-gap-lg: 25px;
+$grid-gap-xl: 50px;
+
+// transition
+$trans-time: 0.3s;
+$trans-style: ease-out;
+$trans: all 0.3s ease-out;
+
+/* HEADER */
+$header-height: 60px;
+$search-widget-height: 108px;
+$adminbar-height: 30px;
+$popup-login-height: 157px;
+
+/* CAROUSEL */
+$carousel-max-height: 760px;
+$carousel-dot-size: 12px;
+
+/* 404 */
+$img-404-size: 100px;
+
+/* AVAILABILITY */
+$availability-true: $c-green-400;
+$availability-false: $c-orange-400;
+$availability-ontheway: $c-yellow-400;
+
+// HP slider IDs
+$slider-1: 18;
+
+$input-height: 44px;
+
+// component widths
+$sidebar-width: 310px;
+
+// buttons
+$btn-padding: 13px 16px;
+$btn-height: 40px;
+
+// favourite
+$favourite-icon-size: 22px;
+
+// Filter
+$slider-border-radius: 3px;
+$slider-height: 8px;
+$slider-handler-size: 22px;
+$slider-inside-height: 12px;
+
+// Checkbox
+$input-checkbox-radius: 1px;
+$input-checkbox-size: 20px;
+
+// Parameters
+$parameter-icon-size: 36px;

@@ -1,0 +1,185 @@
+$space: $gap;
+$color: $c-base;
+$fw: $fw-semibold;
+
+body:not(.in-index) .custom-footer__instagram {
+	display: none !important;
+}
+
+#content {
+	.custom-footer__instagram {
+		width: 100% !important;
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		padding: 0;
+		padding-top: $space * 10;
+		padding-bottom: $space * 10;
+
+		@include max-sm {
+			align-items: center;
+		}
+
+		h4 {
+			width: 50%;
+			font-size: 20px;
+			font-weight: $fw;
+			color: $color;
+
+			@include max-sm {
+				text-align: center;
+				width: 100%;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			span {
+				display: none;
+			}
+
+			a {
+				text-decoration: underline;
+				&:hover {
+					text-decoration: none;
+				}
+			}
+		}
+
+		.instagram-follow-btn {
+			position: absolute;
+			width: 50%;
+			right: 0;
+			text-align: end;
+			padding-right: 20px;
+			margin: 1rem 0;
+			font-weight: $fw;
+			text-decoration: underline;
+			font-size: $fs-base;
+
+			@include min-md {
+				top: $space * 10;
+			}
+
+			@include max-sm {
+				position: relative !important;
+				width: 100%;
+				padding: 0;
+				margin-top: 0;
+				text-align: center;
+
+				span {
+					padding: 0;
+
+					a {
+						text-decoration: underline;
+					}
+				}
+			}
+
+			span {
+				&::before {
+					display: none;
+				}
+
+				a {
+					text-decoration: underline;
+
+					&:hover,
+					&:focus,
+					&:active {
+						text-decoration: none;
+					}
+				}
+			}
+		}
+
+		.instagram-widget {
+			display: flex;
+			flex-wrap: nowrap;
+			max-width: 100%;
+			justify-content: space-between;
+			align-items: center;
+			gap: 15px;
+			padding-top: 10px;
+			width: 100%;
+
+			@include max-sm {
+				flex-direction: column;
+				gap: 15px;
+
+				.ig-container-3,
+				.ig-container-4 {
+					flex-direction: row !important;
+				}
+			}
+
+			> a {
+				display: none;
+			}
+
+			.ig-container-1,
+			.ig-container-2,
+			.ig-container-3,
+			.ig-container-4 {
+				justify-content: center;
+				flex-direction: row;
+				display: flex;
+				gap: 15px;
+				width: 100%;
+
+				@include min-md {
+					width: 25%;
+					flex-direction: column;
+				}
+
+				@include max-xl {
+					gap: 15px;
+				}
+
+				a {
+					width: 100%;
+					position: relative;
+					overflow: hidden;
+
+					&:before {
+						content: '';
+						padding-bottom: 100%;
+						display: block;
+					}
+
+					img {
+						position: absolute;
+						top: 0;
+						bottom: 0;
+						left: 0;
+						right: 0;
+						margin: auto;
+					}
+				}
+			}
+
+			.ig-container-2 {
+				@include min-sm {
+					width: 100%;
+					height: 100%;
+				}
+
+				@include min-md {
+					width: 51.5%;
+				}
+
+				a {
+					height: 100%;
+
+					&:nth-child(2) {
+						display: none;
+					}
+
+					img {
+						height: 100%;
+					}
+				}
+			}
+		}
+	}
+}

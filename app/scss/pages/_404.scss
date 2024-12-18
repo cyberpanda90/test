@@ -1,0 +1,20 @@
+.empty-content {
+	h2 {
+		&:after {
+			content: '';
+			background-image: $img-404;
+			height: $img-404-size;
+			width: $img-404-size;
+			display: block;
+			margin: 0 auto;
+			background-repeat: no-repeat;
+			background-size: contain;
+			margin-top: $gap * 4;
+		}
+	}
+
+	p {
+		font-size: $fs-base;
+		color: $c-base;
+	}
+}

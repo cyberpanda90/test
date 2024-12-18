@@ -1,0 +1,45 @@
+html {
+	font-size: $fs-p;
+	overflow-x: hidden;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-smooth: never;
+}
+
+.external-fonts-loaded body,
+body {
+	font-family: $ff-base;
+	color: $c-base;
+	background-color: $c-white;
+	font-size: $fs-p;
+	font-weight: $fw-light;
+	max-width: 100vw;
+	overflow-x: hidden;
+	letter-spacing: 0;
+}
+
+.ready {
+	visibility: visible !important;
+}
+
+.loaded {
+	opacity: 1 !important;
+}
+
+// Overlay for submenu and user actions
+body {
+	&.submenu-visible,
+	&.user-action-visible {
+		&:before {
+			content: '';
+			display: block;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			background: rgba(0, 0, 0, 0.8);
+			z-index: 100;
+		}
+	}
+}

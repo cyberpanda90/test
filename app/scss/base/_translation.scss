@@ -1,0 +1,25 @@
+@each $lang, $trans in $translations {
+	html[lang='#{$lang}'] {
+		.p-short-description:before {
+			content: trans($lang, 'PRODUCTDESCRIPTION');
+		}
+		footer#footer .custom-footer__banner8 .accordion-content li span.mail:after {
+			content: trans($lang, 'CTAEMAIL');
+		}
+		#content #filters-wrapper .filters-wrapper #filters.filters .filter-title:before {
+			content: trans($lang, 'FILTER');
+		}
+		.link-icon.watchdog:before {
+			content: trans($lang, 'WATCHDOG');
+		}
+		main#content .p-detail .p-detail-inner .p-data-wrapper .pr-action .p-to-cart-block .add-to-cart .add-to-cart-button .icon-cart:before {
+			content: trans($lang, 'ADDTOCART');
+		}
+		#content .vybrane-filtry .slider-wrapper:before {
+			content: trans($lang, 'PRICE');
+		}
+		footer#footer .custom-footer__banner8 .accordion-content li span.tel:after {
+			content: trans($lang, 'WORKINGHOURS');
+		}
+	}
+}

@@ -1,0 +1,40 @@
+.top-categories {
+	display: flex;
+	flex-wrap: wrap;
+	gap: $gap * 2;
+	width: 100vw;
+	max-width: 100%;
+	padding: $gap * 3;
+	justify-content: space-between;
+
+	@include min-xxl {
+		width: $container-xl;
+		margin-top: $gap * 3;
+	}
+
+	&__item {
+		width: calc(50% - $gap);
+		text-align: center;
+
+		@include min-sm {
+			width: calc(100% / 3 - ($gap * 2));
+		}
+
+		@include min-md {
+			width: calc(100% / 6 - ($gap * 2));
+		}
+
+		&:hover {
+			span {
+				text-decoration: underline;
+			}
+		}
+
+		span {
+			color: $c-base;
+			font-size: $fs-base;
+			padding: $gap ($gap * 2) ($gap * 2);
+			display: block;
+		}
+	}
+}

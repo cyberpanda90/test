@@ -1,0 +1,42 @@
+.container {
+	width: 100%;
+
+	@include min-xxl {
+		max-width: $container-xl;
+	}
+}
+
+.content-wrapper {
+	opacity: 0;
+	transition: opacity 0.05s ease-in-out;
+
+	&.container {
+		padding-left: $gap * 3;
+		padding-right: $gap * 3;
+
+		.content-wrapper-in {
+			main {
+				&#content {
+					@include min-md {
+						padding-left: 0;
+						padding-right: 0;
+					}
+
+					.container-full-width {
+						@include min-md {
+							max-width: none;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// Make the footer stick to the bottom of the page
+.overall-wrapper {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}

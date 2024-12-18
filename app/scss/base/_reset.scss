@@ -1,0 +1,59 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+*:focus,
+*:active {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin-top: 0;
+	margin-bottom: 0;
+	margin-block-start: 0;
+	margin-block-end: 0;
+	line-height: 1;
+}
+
+ul {
+	line-height: 1;
+}
+
+li {
+	list-style: none;
+	line-height: 1;
+}
+
+a {
+	display: inline-block;
+	text-decoration: none;
+
+	&:hover,
+	&:active,
+	&:focus {
+		text-decoration: underline;
+	}
+
+	&:focus {
+		outline: none;
+	}
+}
+
+input,
+label {
+	line-height: 1;
+}
+
+img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}

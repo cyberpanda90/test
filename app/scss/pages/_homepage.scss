@@ -1,0 +1,174 @@
+.homepage-group-title {
+	&.h4 {
+		font-size: $fs-h4;
+		font-weight: $fw-semibold;
+		text-align: left;
+		margin-top: 0;
+		margin-bottom: $gap * 2;
+
+		@include min-md {
+			padding-top: 0;
+		}
+
+		@include min-lg {
+			padding-top: $gap * 10;
+		}
+	}
+}
+
+.homepage-latest-contribution-full-width {
+	display: none;
+}
+
+#imagebanners {
+	margin-top: $gap * 5;
+	padding-top: $gap * 2;
+	margin-bottom: $gap * 2;
+
+	@include min-md {
+		display: flex;
+		gap: $gap;
+	}
+
+	@include min-lg {
+		margin-top: $gap * 10;
+		gap: $gap * 3;
+	}
+}
+
+.one-column-body .welcome-wrapper {
+	margin-top: $gap * 10;
+
+	@include min-md {
+		background-image: $img-welcome;
+		background-size: cover;
+		background-position: 80vw center;
+		margin-left: -($gap * 3);
+		margin-right: -($gap * 3);
+		margin-top: $gap * 10;
+		margin-bottom: $gap * 10;
+		padding: 0;
+	}
+
+	@include min-lg {
+		background-position: 70vw center;
+		margin-top: $gap * 10;
+	}
+
+	@include min-xxl {
+		position: relative;
+	}
+
+	@include max-sm {
+		background-image: none !important;
+	}
+
+	.welcome {
+		@include min-md {
+			width: 60%;
+			margin-right: 0;
+			background: $c-white;
+			padding: $gap * 10;
+		}
+
+		@include min-xxl {
+			width: 50%;
+		}
+
+		h1 {
+			display: none;
+		}
+
+		> div {
+			> p:first-child {
+				> img {
+					width: 100vw;
+					max-width: none;
+					margin-left: -($gap * 3);
+
+					@include min-md {
+						display: none;
+					}
+
+					@include min-xxl {
+						display: block;
+						position: absolute;
+						height: 100%;
+						width: auto;
+						top: 0;
+						right: 50%;
+					}
+				}
+			}
+
+			p {
+				text-align: center;
+				font-weight: $fw-normal;
+				font-size: $fs-base;
+			}
+
+			strong {
+				font-weight: $fw-bold;
+				font-size: $fs-h3;
+				line-height: $lh-h3;
+			}
+
+			a {
+				color: $c-btn-primary;
+				background-color: $c-primary;
+				font-weight: $fw-semibold;
+				padding: $btn-padding;
+				border-radius: 0;
+
+				&:hover {
+					background-color: $c-primary-hover;
+					text-decoration: none;
+				}
+			}
+		}
+	}
+}
+
+// Custom order of homepage sections
+body {
+	&.in-index {
+		main {
+			&#content {
+				display: flex;
+				flex-direction: column;
+
+				.homepage-products-heading-#{$slider-1} {
+					order: 1;
+				}
+
+				.products-block.products-#{$slider-1} {
+					order: 2;
+				}
+
+				.middle-banners {
+					order: 3;
+				}
+
+				.homepage-products-heading-21 {
+					order: 4;
+				}
+
+				.footer-banners {
+					order: 5;
+				}
+
+				.welcome-wrapper {
+					order: 6;
+				}
+
+				.custom-footer__instagram {
+					order: 7;
+				}
+
+				.benefit-banners-full-width {
+					order: 8;
+				}
+			}
+		}
+	}
+}

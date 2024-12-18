@@ -1,0 +1,89 @@
+.external-fonts-loaded .h4,
+.external-fonts-loaded ol.cart-header,
+.external-fonts-loaded .next-step,
+.external-fonts-loaded .price-wrapper,
+.external-fonts-loaded .price-additional,
+.external-fonts-loaded .price-measure,
+.external-fonts-loaded .price-final,
+.external-fonts-loaded .price-save,
+.external-fonts-loaded .price-standard,
+.external-fonts-loaded .btn,
+.external-fonts-loaded .products .name,
+.external-fonts-loaded h1,
+.external-fonts-loaded h2,
+.external-fonts-loaded h3,
+.external-fonts-loaded h4,
+.external-fonts-loaded h5,
+.external-fonts-loaded h6,
+.external-fonts-loaded .h1,
+.external-fonts-loaded .h2,
+.external-fonts-loaded .h3,
+.external-fonts-loaded .h4,
+.external-fonts-loaded .h5,
+.external-fonts-loaded .h6,
+.external-fonts-loaded .cart-table .main-link,
+.external-fonts-loaded .cart-related-name,
+.blank-mode h1,
+.blank-mode h2,
+.blank-mode h3,
+.blank-mode h4,
+.blank-mode h5,
+.blank-mode h6,
+.blank-mode .h1,
+.blank-mode .h2,
+.blank-mode .h3,
+.blank-mode .h4,
+.blank-mode .h5,
+.blank-mode .h6,
+.blank-mode .cart-table .main-link,
+.blank-mode .cart-related-name,
+.external-fonts-loaded #footer h5 {
+	font-family: $ff-base;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+	font-family: $ff-base;
+	color: $c-base;
+}
+
+h1,
+.h1 {
+	@include h1;
+}
+
+h2,
+.h2 {
+	@include h2;
+}
+
+h3,
+.h3 {
+	@include h3;
+}
+
+h4,
+.h4 {
+	@include h4;
+}
+
+a {
+	color: $c-base;
+	text-decoration: none;
+
+	&:hover,
+	&:focus {
+		color: $c-base;
+		text-decoration: underline;
+	}
+}

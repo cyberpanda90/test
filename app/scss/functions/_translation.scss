@@ -1,0 +1,20 @@
+$translations: (
+	'cs': $trans-cs,
+	'sk': $trans-sk,
+	'de': $trans-de,
+	'en': $trans-en,
+);
+
+@function trans($lang, $key) {
+	$lang-map: map-get($translations, $lang);
+	@if type-of($lang-map) != 'map' {
+		@warn 'Invalid map for language: ' + $lang;
+		@return $key;
+	}
+	@if map-has-key($lang-map, $key) {
+		@return map-get($lang-map, $key);
+	} @else {
+		@warn 'Translation not found for key: ' + $key;
+		@return $key;
+	}
+}

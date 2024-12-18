@@ -1,0 +1,173 @@
+main {
+	&#content {
+		.products-block,
+		.products-block--mime {
+			.product {
+				.widget-parameter-wrapper {
+					height: $gap * 5;
+					margin-top: -($gap * 9);
+					margin-bottom: $gap * 4;
+					justify-content: flex-start;
+					padding-left: $gap * 2;
+					opacity: 0;
+					transition: $trans;
+					order: 2;
+
+					.widget-parameter-list {
+						.widget-parameter-value {
+							a {
+								background-color: $c-white;
+								border: 0;
+								height: $gap * 5;
+								width: auto;
+								min-width: $gap * 5;
+								text-align: center;
+								line-height: $gap * 5;
+								display: block;
+								padding: ($gap * 0.5) $gap;
+								margin-right: $gap;
+								transition: $trans;
+
+								&:hover {
+									text-decoration: none;
+									background-color: $c-base;
+									color: $c-white;
+								}
+							}
+						}
+					}
+				}
+
+				&:hover {
+					.widget-parameter-wrapper {
+						opacity: 1;
+					}
+				}
+
+				.p {
+					&-in {
+						position: relative;
+
+						.prices {
+							display: flex;
+							align-items: flex-end;
+
+							.price-final {
+								margin-right: $gap;
+							}
+
+							.price-standard {
+								strong {
+									font-weight: $fw-light;
+									position: relative;
+									top: 1px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+main {
+	&#content {
+		.products-block {
+			.product {
+				&:hover {
+					.name {
+						text-decoration: underline;
+					}
+				}
+
+				.p {
+					.p-in {
+						padding-top: $gap;
+						position: relative;
+
+						&-in {
+							.name {
+								font-weight: $fw-light;
+								font-size: $fs-p;
+								text-align: left;
+								height: auto;
+							}
+						}
+					}
+
+					.p-code {
+						display: none;
+					}
+
+					.p-bottom {
+						.availability,
+						.ratings-wrapper,
+						.p-tools,
+						.p-desc {
+							display: none;
+						}
+
+						.prices {
+							padding-top: 0;
+							justify-content: flex-start;
+							display: flex;
+
+							.price {
+								&-final {
+									flex-basis: auto;
+									font-size: $fs-base;
+									margin-right: $gap;
+
+									strong {
+										font-weight: $fw-bold;
+									}
+								}
+
+								&-standard {
+									strong {
+										color: $c-gray-600;
+										font-size: $fs-p;
+										font-weight: $fw-light;
+									}
+								}
+
+								&-save {
+									background: $c-white;
+									color: $c-primary;
+									font-size: $fs-p;
+									font-weight: $fw-semibold;
+									padding: 0 $gap;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			&--mime {
+				margin-left: -($gap * 3);
+				margin-right: -($gap * 3);
+
+				.flickity-slider {
+					margin-left: $gap * 3;
+					margin-right: $gap * 3;
+				}
+			}
+		}
+	}
+}
+
+// Don't apply for products on HP
+body:not(.in-index) {
+	main {
+		&#content {
+			.products-block-mime {
+				.product {
+					padding-top: 0;
+					padding-bottom: $gap * 5;
+				}
+			}
+		}
+	}
+}
