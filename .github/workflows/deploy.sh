@@ -27,7 +27,7 @@ create_remote_dir() {
 # Funkce pro kontrolu existence souboru na serveru
 file_exists() {
     local remote_file="$1"
-    echo "test -e \"$remote_file\" || echo 1"
+    echo "ls \"$remote_file\" > /dev/null 2>&1"
 }
 
 # Funkce pro nahrávání HTML složek
