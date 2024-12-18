@@ -24,6 +24,12 @@ create_remote_dir() {
     done
 }
 
+# Funkce pro kontrolu existence souboru na serveru
+file_exists() {
+    local remote_file="$1"
+    echo "ls \"$remote_file\" > /dev/null 2>&1"
+}
+
 # Funkce pro nahrávání HTML složek
 upload_html() {
     find "$HTML_DIR" -type f | while IFS= read -r file; do
@@ -31,9 +37,12 @@ upload_html() {
         local remote_path="$BASE_REMOTE/html/$relative_path"
         local remote_dir=$(dirname "$remote_path")
         create_remote_dir "$remote_dir"
-        echo "# Uploading: $file to $remote_path"
+        echo "# Checking and uploading: $file to $remote_path"
+        file_exists "$remote_path"
+        echo "if [ \"$?\" -ne 0 ]; then"
         echo "cd \"$remote_dir\""
         echo "put \"$file\" \"$(basename "$file")\""
+        echo "fi"
     done
 }
 
@@ -44,9 +53,12 @@ upload_src() {
         local remote_path="$BASE_REMOTE/src/$relative_path"
         local remote_dir=$(dirname "$remote_path")
         create_remote_dir "$remote_dir"
-        echo "# Uploading: $file to $remote_path"
+        echo "# Checking and uploading: $file to $remote_path"
+        file_exists "$remote_path"
+        echo "if [ \"$?\" -ne 0 ]; then"
         echo "cd \"$remote_dir\""
         echo "put \"$file\" \"$(basename "$file")\""
+        echo "fi"
     done
 }
 
@@ -54,9 +66,12 @@ upload_src() {
 upload_dist() {
     for file in "${DIST_FILES[@]}"; do
         local remote_path="$BASE_REMOTE/$(basename "$file")"
-        echo "# Uploading: $file to $remote_path"
+        echo "# Checking and uploading: $file to $remote_path"
+        file_exists "$remote_path"
+        echo "if [ \"$?\" -ne 0 ]; then"
         echo "cd \"$BASE_REMOTE\""
         echo "put \"$file\" \"$(basename "$file")\""
+        echo "fi"
     done
 }
 
