@@ -15,45 +15,77 @@ DIST_FILES=("dist/script.js" "dist/style.css")
 
 # Funkce pro vytvoření složky (rekurzivně)
 create_remote_dir() {
-    local path="$1"
+    local path="$(clean_path "$1")"
     IFS="/" read -ra parts <<< "$path"
     local current_path=""
     for part in "${parts[@]}"; do
         current_path="$current_path/$part"
-        echo "mkdir \"$current_path\" || true"
+        echo "if ! ls \"$current_path\" > /dev/null 2>&1; then"
+        echo "mkdir \"$current_path\" > /dev/null 2>&1 || :"
+        echo "fi"
     done
 }
 
-# Funkce pro nahrávání souborů
-upload_file() {
-    local local_file="$1"
-    local remote_file="$2"
-    local remote_dir
-    remote_dir=$(dirname "$remote_file")
-    echo "mkdir \"$remote_dir\" || true"
-    echo "put \"$local_file\" \"$remote_file\""
+# Funkce pro čištění cest
+clean_path() {
+    local path="$1"
+    echo "$path" | sed 's:/\+:/:g'
+}
+
+# Funkce pro kontrolu existence souboru na serveru
+file_exists() {
+    local remote_file="$(clean_path "$1")"
+    echo "ls \"$remote_file\" > /dev/null 2>&1"
+}
+
+# Funkce pro nahrávání HTML složek
+upload_html() {
+    find "$HTML_DIR" -type f | while IFS= read -r file; do
+        local relative_path="${file#$HTML_DIR/}"
+        local remote_path="$(clean_path "$BASE_REMOTE/html/$relative_path")"
+        local remote_dir=$(dirname "$remote_path")
+        create_remote_dir "$remote_dir"
+        echo "# Checking and uploading: $file to $remote_path"
+        echo "if ! $(file_exists "$remote_path"); then"
+        echo "cd \"$remote_dir\""
+        echo "put \"$file\" \"$(basename "$file")\""
+        echo "fi"
+    done
+}
+
+# Funkce pro nahrávání SRC složek
+upload_src() {
+    find "$SRC_DIR" -type f | while IFS= read -r file; do
+        local relative_path="${file#$SRC_DIR/}"
+        local remote_path="$(clean_path "$BASE_REMOTE/src/$relative_path")"
+        local remote_dir=$(dirname "$remote_path")
+        create_remote_dir "$remote_dir"
+        echo "# Checking and uploading: $file to $remote_path"
+        echo "if ! $(file_exists "$remote_path"); then"
+        echo "cd \"$remote_dir\""
+        echo "put \"$file\" \"$(basename "$file")\""
+        echo "fi"
+    done
+}
+
+# Funkce pro nahrávání dist souborů
+upload_dist() {
+    for file in "${DIST_FILES[@]}"; do
+        local remote_path="$(clean_path "$BASE_REMOTE/$(basename "$file")")"
+        echo "# Checking and uploading: $file to $remote_path"
+        echo "if ! $(file_exists "$remote_path"); then"
+        echo "cd \"$BASE_REMOTE\""
+        echo "put \"$file\" \"$(basename "$file")\""
+        echo "fi"
+    done
 }
 
 # Spuštění SFTP
 sshpass -p "$PASSWORD" sftp -oBatchMode=no -oStrictHostKeyChecking=no "$USERNAME@$HOST" <<EOF
 $(create_remote_dir "$BASE_REMOTE/html")
-$(find "$HTML_DIR" -type f | while IFS= read -r file; do
-    relative_path="${file#$HTML_DIR/}"
-    remote_path="$BASE_REMOTE/html/$relative_path"
-    upload_file "$file" "$remote_path"
-done)
-
+$(upload_html)
 $(create_remote_dir "$BASE_REMOTE/src")
-$(find "$SRC_DIR" -type f | while IFS= read -r file; do
-    relative_path="${file#$SRC_DIR/}"
-    remote_path="$BASE_REMOTE/src/$relative_path"
-    upload_file "$file" "$remote_path"
-done)
-
-$(for file in "${DIST_FILES[@]}"; do
-    remote_path="$BASE_REMOTE/$(basename "$file")"
-    upload_file "$file" "$remote_path"
-done)
-
+$(upload_src)
+$(upload_dist)
 bye
 EOF
