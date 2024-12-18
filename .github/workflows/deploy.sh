@@ -49,7 +49,7 @@ remove_extra_files() {
     local remote_dir="$1"
     local local_dir="$2"
     echo "cd \"$remote_dir\""
-    echo "ls" | while IFS= read -r remote_file; do
+    echo "ls -1" | while IFS= read -r remote_file; do
         if [[ ! -e "$local_dir/$remote_file" ]]; then
             echo "rm \"$remote_file\""
         fi
