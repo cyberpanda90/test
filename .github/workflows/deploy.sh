@@ -16,18 +16,30 @@ DIST_FILES=("dist/script.js" "dist/style.css")
 # Function to clean paths
 clean_path() {
     local path="$1"
-    echo "$path" | sed -e 's://:/:g' -e 's:/$::'
+    echo "$path" | sed 's://:/:g' | sed 's:/$::'
 }
 
 # Function to create remote directories iteratively
 create_remote_dirs() {
-    local path="$1"
+    local path="$(clean_path "$1")"
     local current_dir="/"
     IFS="/" read -ra parts <<< "$path"
     for part in "${parts[@]}"; do
         current_dir="$current_dir$part"
         echo "mkdir \"$current_dir\" || true"
         current_dir="$current_dir/"
+    done
+}
+
+# Function to remove extra files
+remove_extra_files() {
+    local remote_dir="$1"
+    local local_dir="$2"
+    echo "cd \"$remote_dir\""
+    echo "ls -1" | while IFS= read -r remote_file; do
+        if [[ ! -e "$local_dir/$remote_file" ]]; then
+            echo "rm \"$remote_file\""
+        fi
     done
 }
 
@@ -42,28 +54,15 @@ upload_files() {
         create_remote_dirs "$remote_dir"
         echo "put \"$file\" \"$remote_path\""
     done
-}
-
-# Function to remove extra files from remote directory
-remove_extra_files() {
-    local remote_dir="$1"
-    local local_dir="$2"
-    echo "cd \"$remote_dir\""
-    echo "ls -1" | while IFS= read -r remote_file; do
-        if [[ ! -e "$local_dir/$remote_file" ]]; then
-            echo "rm \"$remote_file\""
-        fi
-    done
+    remove_extra_files "$remote_base" "$local_dir"
 }
 
 # Execute SFTP
 sshpass -p "$PASSWORD" sftp -oBatchMode=no -oStrictHostKeyChecking=no "$USERNAME@$HOST" <<EOF
 $(create_remote_dirs "$BASE_REMOTE/html")
 $(upload_files "$HTML_DIR" "$BASE_REMOTE/html")
-$(remove_extra_files "$BASE_REMOTE/html" "$HTML_DIR")
 $(create_remote_dirs "$BASE_REMOTE/src")
 $(upload_files "$SRC_DIR" "$BASE_REMOTE/src")
-$(remove_extra_files "$BASE_REMOTE/src" "$SRC_DIR")
 $(upload_files "$(dirname "${DIST_FILES[0]}")" "$BASE_REMOTE")
 bye
 EOF
