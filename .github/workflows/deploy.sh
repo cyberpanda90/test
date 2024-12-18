@@ -6,7 +6,7 @@ USERNAME="$FTP_USER"
 PASSWORD="$FTP_PASSWORD"
 
 # Base remote directory
-BASE_REMOTE="/mime"
+BASE_REMOTE="mime"
 
 # Lokální složky
 declare -a HTML_DIRS=("app/html")
