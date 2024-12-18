@@ -27,7 +27,7 @@ create_remote_dir() {
 # Funkce pro kontrolu existence souboru na serveru
 file_exists() {
     local remote_file="$1"
-    echo "ls \"$remote_file\" > /dev/null 2>&1"
+    echo "test -e \"$remote_file\" || echo 1"
 }
 
 # Funkce pro nahrávání HTML složek
@@ -38,8 +38,7 @@ upload_html() {
         local remote_dir=$(dirname "$remote_path")
         create_remote_dir "$remote_dir"
         echo "# Checking and uploading: $file to $remote_path"
-        file_exists "$remote_path"
-        echo "if [ \"$?\" -ne 0 ]; then"
+        echo "if ! $(file_exists "$remote_path"); then"
         echo "cd \"$remote_dir\""
         echo "put \"$file\" \"$(basename "$file")\""
         echo "fi"
@@ -54,8 +53,7 @@ upload_src() {
         local remote_dir=$(dirname "$remote_path")
         create_remote_dir "$remote_dir"
         echo "# Checking and uploading: $file to $remote_path"
-        file_exists "$remote_path"
-        echo "if [ \"$?\" -ne 0 ]; then"
+        echo "if ! $(file_exists "$remote_path"); then"
         echo "cd \"$remote_dir\""
         echo "put \"$file\" \"$(basename "$file")\""
         echo "fi"
@@ -67,8 +65,7 @@ upload_dist() {
     for file in "${DIST_FILES[@]}"; do
         local remote_path="$BASE_REMOTE/$(basename "$file")"
         echo "# Checking and uploading: $file to $remote_path"
-        file_exists "$remote_path"
-        echo "if [ \"$?\" -ne 0 ]; then"
+        echo "if ! $(file_exists "$remote_path"); then"
         echo "cd \"$BASE_REMOTE\""
         echo "put \"$file\" \"$(basename "$file")\""
         echo "fi"
